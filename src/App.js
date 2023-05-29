@@ -2,13 +2,12 @@ import "./index.css";
 import confetti from "canvas-confetti";
 import { useState, useEffect } from "react";
 
+// import { resolvableShapes } from "party-js";
 
 function App() {
 	const [tenzis, setTenzis] = useState(createNewGame());
-	const [newGame,setNewGame] = useState(false);
-
-
-
+	const [newGame, setNewGame] = useState(false);
+	
 	// створення об'екту масиву
 	function createNewGame() {
 		const tenzios = [];
@@ -21,7 +20,7 @@ function App() {
 		}
 		return tenzios;
 	}
-	// console.log(tenzios[e].reserv);
+
 	// зміна reserv на true при кліку
 	function reserveTenzion(id) {
 		const updatedTenzios = tenzis.map((tenz) => {
@@ -80,20 +79,29 @@ function App() {
 		if (allReserv && allNumSame) {
 			setTenzis(createNewGame());
 			setNewGame(true);
-		}else {}
-		setNewGame(!newGame)};
-	
-	const valueName =()=>{
-		if(allReserv && allNumSame){
-			return "New Game"
-		}else{
-			return "Roll"
+			setClicks(0);
+		} else {
 		}
-	}
+		setNewGame(!newGame);
+	};
+
+	const valueName = () => {
+		if (allReserv && allNumSame) {
+			return "New Game";
+		} else {
+			return "Roll";
+		}
+	};
+	const [clicks, setClicks] = useState(0); 
+	const clickCounter = () => {
+    setClicks(clicks +1); 
+    
+  }
+	
+
 	return (
-		<div className="App" >
-		
-			<div className="conteiner"  >
+		<div className="App">
+			<div className="conteiner">
 				<div className="conteiner-text">
 					<h1 className="title">Tenzies</h1>
 					<p className="text">
@@ -115,13 +123,16 @@ function App() {
 						);
 					})}
 				</div>
-				{/*  */}
+
 				<div className="conteiner-button">
-					<button className="button"  onClick={() =>{
-						return setTenzis(rollTenz()),setNewGame(newGameHandler())
+					<button
+						className="button" id="btn"
+						onClick={() => {
+							return setTenzis(rollTenz()),clickCounter(),setNewGame(newGameHandler());
 						}}>
 						{valueName()}
 					</button>
+					<p className="clicks">{clicks}</p>
 				</div>
 			</div>
 		</div>
@@ -129,10 +140,3 @@ function App() {
 }
 
 export default App;
-
-	
-		
-	
-
-	
-	
